@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * Created by Justwen on 2018/10/21.
  */
-public class TrainAdapter extends BaseAdapter {
+public class TicketAdapter extends BaseAdapter {
 
     private List<TicketInfo> mDataList;
 
-    public TrainAdapter(List<TicketInfo> dataList) {
+    public TicketAdapter(List<TicketInfo> dataList) {
         mDataList = dataList;
     }
 

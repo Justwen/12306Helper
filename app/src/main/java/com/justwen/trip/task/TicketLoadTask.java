@@ -31,7 +31,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by Justwen on 2018/10/21.
  */
-public class SmsLoadTask {
+public class TicketLoadTask {
 
     private static final String TICKET_ORDER_REGEX = "订单(.*?),(.*?)您已购(.*?)日(.*?)次(.*?),(.*[\\u4E00-\\u9FA5])(.*[0-9])开";
 

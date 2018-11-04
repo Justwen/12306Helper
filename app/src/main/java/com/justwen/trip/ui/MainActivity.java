@@ -4,18 +4,18 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 
+import com.justwen.trip.ui.fragment.TicketListFragment;
 import com.justwen.trip.util.PermissionManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (checkPermissions()) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(android.R.id.content, new SmsListFragment())
+                    .replace(android.R.id.content, new TicketListFragment())
                     .commit();
         }
     }
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new SmsListFragment())
+                .replace(android.R.id.content, new TicketListFragment())
                 .commit();
 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
