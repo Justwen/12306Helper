@@ -93,7 +93,7 @@ public class TicketLoadTask {
             cursor = TripApplication.getContext().getContentResolver().query(Uri.parse("content://sms"),
                     new String[]{"address", "body", "date"},
                     "date > ? and address=?",
-                    new String[]{String.valueOf(calendar.getTime().getTime()), "12306"}, "date desc");
+                    new String[]{String.valueOf(calendar.getTime().getTime()), "12306"}, "date asc");
             if (cursor != null) {
                 String body;
                 while (cursor.moveToNext()) {
@@ -125,10 +125,9 @@ public class TicketLoadTask {
         if (ticketInfo != null) {
             int index = ret.indexOf(ticketInfo);
             if (index >= 0) {
-                ret.set(index, ticketInfo);
-            } else {
-                ret.add(ticketInfo);
+                ret.get(index).setState(TicketInfo.STATE_CHANGE);
             }
+            ret.add(ticketInfo);
             return;
         }
 
@@ -154,7 +153,7 @@ public class TicketLoadTask {
                     .setSeat(matcher.group(INDEX_SEAT))
                     .setPassenger(matcher.group(INDEX_NAME))
                     .setDepartureStation(matcher.group(INDEX_FROM))
-                    .setDate(matcher.group(INDEX_DATE) + "日 ")
+                    .setDate(matcher.group(INDEX_DATE) + "日")
                     .setTime(matcher.group(INDEX_TIME))
                     .setOrderId(matcher.group(INDEX_ORDER_ID));
             if (isValid(ticketInfo)) {
@@ -190,10 +189,10 @@ public class TicketLoadTask {
                     .setSeat(matcher.group(INDEX_SEAT))
                     .setPassenger(matcher.group(INDEX_NAME))
                     .setDepartureStation(matcher.group(INDEX_FROM))
-                    .setDate(matcher.group(INDEX_DATE) + "日 ")
+                    .setDate(matcher.group(INDEX_DATE) + "日")
                     .setTime(matcher.group(INDEX_TIME))
                     .setOrderId(matcher.group(INDEX_ORDER_ID))
-                    .setState(TicketInfo.STATE_CHANGE);
+                    .setState(TicketInfo.STATE_ORDER_CHANGE);
             if (isValid(ticketInfo)) {
                 return ticketInfo;
             }
@@ -206,8 +205,8 @@ public class TicketLoadTask {
         if (matcher.find()) {
             TicketInfo ticketInfo = new TicketInfo();
             ticketInfo.setPassenger(matcher.group(1))
-                    .setTrain(matcher.group(2))
-                    .setDate(matcher.group(3) + "日")
+                    .setTrain(matcher.group(3))
+                    .setDate(matcher.group(2) + "日")
                     .setSeat(matcher.group(4))
                     .setState(TicketInfo.STATE_RETURN);
             return ticketInfo;

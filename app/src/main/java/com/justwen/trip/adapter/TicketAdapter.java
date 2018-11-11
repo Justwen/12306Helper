@@ -1,6 +1,5 @@
 package com.justwen.trip.adapter;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +37,7 @@ public class TicketAdapter extends BaseAdapter {
         return position;
     }
 
+    @Deprecated
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -54,16 +54,19 @@ public class TicketAdapter extends BaseAdapter {
         TicketInfo ticketInfo = (TicketInfo) getItem(position);
 
         nameView.setText(String.format("乘客：%s", ticketInfo.getPassenger()));
-        dateView.setText(String.format("乘车时间：%s %s", ticketInfo.getDate(),ticketInfo.getTime()));
+        dateView.setText(String.format("乘车时间：%s %s", ticketInfo.getDate(), ticketInfo.getTime()));
         trainView.setText(String.format("车次：%s", ticketInfo.getTrain()));
         fromView.setText(String.format("始发地：%s", ticketInfo.getDepartureStation()));
         seatView.setText(String.format("座位：%s", ticketInfo.getSeat()));
         if (ticketInfo.getState() == TicketInfo.STATE_CHANGE) {
-            stateView.setText("已改签");
-            stateView.setTextColor(Color.GREEN);
+            stateView.setText("车票状态：已改签");
+            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_blue_dark));
         } else if (ticketInfo.getState() == TicketInfo.STATE_RETURN) {
-            stateView.setText("已退票");
-            stateView.setTextColor(Color.RED);
+            stateView.setText("车票状态：已退票");
+            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_red_dark));
+        } else if (ticketInfo.getState() == TicketInfo.STATE_ORDER_CHANGE) {
+            stateView.setText("车票状态：改签票");
+            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_blue_dark));
         } else {
             stateView.setText("");
         }
