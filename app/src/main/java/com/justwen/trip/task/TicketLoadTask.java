@@ -3,7 +3,6 @@ package com.justwen.trip.task;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import com.justwen.trip.TripApplication;
 import com.justwen.trip.bean.TicketInfo;
@@ -85,30 +84,24 @@ public class TicketLoadTask {
     }
 
     private static List<TicketInfo> loadTripInfo() {
-        Cursor cursor = null;
         List<TicketInfo> result = new ArrayList<>();
         try {
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.MONTH, -2);
-            cursor = TripApplication.getContext().getContentResolver().query(Uri.parse("content://sms"),
+            calendar.add(Calendar.MONTH, -1);
+            try (Cursor cursor = TripApplication.getContext().getContentResolver().query(Uri.parse("content://sms"),
                     new String[]{"address", "body", "date"},
                     "date > ? and address=?",
-                    new String[]{String.valueOf(calendar.getTime().getTime()), "12306"}, "date asc");
-            if (cursor != null) {
-                String body;
-                while (cursor.moveToNext()) {
-                    body = cursor.getString(cursor.getColumnIndex("body"));
-                    String time = cursor.getString(cursor.getColumnIndex("date"));
-                    Log.d("mahang", time);
-                    parse(result, body);
+                    new String[]{String.valueOf(calendar.getTime().getTime()), "12306"}, "date asc")) {
+                if (cursor != null) {
+                    String body;
+                    while (cursor.moveToNext()) {
+                        body = cursor.getString(cursor.getColumnIndex("body"));
+                        parse(result, body);
+                    }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
         }
         return result;
     }
