@@ -137,4 +137,20 @@ public class TicketInfo implements Comparable<TicketInfo> {
         mTime = time;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "TicketInfo{" +
+                "mOrderId='" + mOrderId + '\'' +
+                ", mSeat='" + mSeat + '\'' +
+                ", mDate='" + mDate + '\'' +
+                ", mTime='" + mTime + '\'' +
+                ", mDepartureStation='" + mDepartureStation + '\'' +
+                ", mDestination='" + mDestination + '\'' +
+                ", mTrain='" + mTrain + '\'' +
+                ", mPassenger='" + mPassenger + '\'' +
+                ", mState=" + mState +
+                ", mTimeMillis=" + mTimeMillis +
+                '}';
+    }
 }

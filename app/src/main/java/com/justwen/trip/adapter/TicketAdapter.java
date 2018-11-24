@@ -42,7 +42,7 @@ public class TicketAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_item_train, parent, false);
+                    .inflate(R.layout.list_item_train_table, parent, false);
         }
         TextView nameView = convertView.findViewById(R.id.tv_name);
         TextView dateView = convertView.findViewById(R.id.tv_date);

@@ -96,6 +96,7 @@ public class TicketLoadTask {
                     String body;
                     while (cursor.moveToNext()) {
                         body = cursor.getString(cursor.getColumnIndex("body"));
+                        body = body.replaceAll("，", ",");
                         parse(result, body);
                     }
                 }
@@ -174,7 +175,7 @@ public class TicketLoadTask {
         return false;
     }
 
-    private static TicketInfo parseChange(String sms) {
+    public static TicketInfo parseChange(String sms) {
         Matcher matcher = Pattern.compile(TICKET_CHANGE_REGEX).matcher(sms);
         if (matcher.find()) {
             TicketInfo ticketInfo = new TicketInfo();
