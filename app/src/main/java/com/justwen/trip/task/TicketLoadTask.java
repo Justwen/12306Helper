@@ -163,6 +163,10 @@ public class TicketLoadTask {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM月dd日HH:mm", Locale.getDefault());
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            if (Calendar.DECEMBER == month && ticketInfo.getDate().contains("1月")) {
+                year++;
+            }
             String dateStr = year + ticketInfo.getDate() + ticketInfo.getTime();
             Date date = dateFormat.parse(dateStr);
             if (date.getTime() >= System.currentTimeMillis()) {
