@@ -1,49 +1,40 @@
 package com.justwen.trip.ui;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 
 import com.justwen.trip.ui.fragment.TicketListFragment;
-import com.justwen.trip.util.PermissionManager;
+import com.tbruyelle.rxpermissions2.Permission;
+import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import io.reactivex.functions.Consumer;
 
 public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (checkPermissions()) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(android.R.id.content, new TicketListFragment())
-                    .commit();
-        }
+        checkPermissions();
     }
 
-    private boolean checkPermissions() {
-        if (PermissionManager.checkPermission(this, Manifest.permission.RECEIVE_SMS)) {
-            return true;
-        } else {
-            PermissionManager.getInstance()
-                    .add(Manifest.permission.READ_SMS)
-                    .add(Manifest.permission.RECEIVE_SMS)
-                    .request(this);
-            return false;
-        }
-    }
+    @SuppressLint("CheckResult")
+    private void checkPermissions() {
+        new RxPermissions(this)
+                .requestEachCombined(Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS)
+                .subscribe(new Consumer<Permission>() {
+                    @Override
+                    public void accept(Permission permission) {
+                        if (permission.granted) {
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(android.R.id.content, new TicketListFragment())
+                                    .commit();
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                finish();
-                return;
-            }
-        }
-        getSupportFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new TicketListFragment())
-                .commit();
+                        } else {
+                            finish();
+                        }
+                    }
+                });
 
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

@@ -88,7 +88,7 @@ public class TicketLoadTask {
         try {
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.MONTH, -1);
-            try (Cursor cursor = TripApplication.getContext().getContentResolver().query(Uri.parse("content://sms"),
+            try (Cursor cursor = TripApplication.getContext().getContentResolver().query(Uri.parse("content://sms/"),
                     new String[]{"address", "body", "date"},
                     "date > ? and address=?",
                     new String[]{String.valueOf(calendar.getTime().getTime()), "12306"}, "date asc")) {
