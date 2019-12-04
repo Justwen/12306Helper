@@ -164,7 +164,7 @@ public class TicketLoadTask {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
-            if (Calendar.DECEMBER == month && ticketInfo.getDate().contains("1月")) {
+            if (Calendar.DECEMBER == month && ticketInfo.getDate().contains("1月") && !ticketInfo.getDate().contains("11月")) {
                 year++;
             }
             String dateStr = year + ticketInfo.getDate() + ticketInfo.getTime();
