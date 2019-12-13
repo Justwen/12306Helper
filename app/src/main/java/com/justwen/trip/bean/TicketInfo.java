@@ -11,9 +11,7 @@ public class TicketInfo implements Comparable<TicketInfo> {
 
     public static final int STATE_CHANGE = 1;
 
-    public static final int STATE_ORDER_CHANGE = 3;
-
-    public static final int STATE_RETURN = 2;
+    public static final int STATE_REFUND = 2;
 
     private String mOrderId;
 

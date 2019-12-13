@@ -59,14 +59,11 @@ public class TicketAdapter extends BaseAdapter {
         fromView.setText(String.format("始发地：%s", ticketInfo.getDepartureStation()));
         seatView.setText(String.format("座位：%s", ticketInfo.getSeat()));
         if (ticketInfo.getState() == TicketInfo.STATE_CHANGE) {
-            stateView.setText("车票状态：已改签");
-            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_blue_dark));
-        } else if (ticketInfo.getState() == TicketInfo.STATE_RETURN) {
-            stateView.setText("车票状态：已退票");
-            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_red_dark));
-        } else if (ticketInfo.getState() == TicketInfo.STATE_ORDER_CHANGE) {
             stateView.setText("车票状态：改签票");
             stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_blue_dark));
+        } else if (ticketInfo.getState() == TicketInfo.STATE_REFUND) {
+            stateView.setText("车票状态：已退票");
+            stateView.setTextColor(parent.getContext().getColor(android.R.color.holo_red_dark));
         } else {
             stateView.setText("");
         }
