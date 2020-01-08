@@ -87,6 +87,8 @@ public class TicketOrderParser implements ITicketParser {
             int month = calendar.get(Calendar.MONTH);
             if (Calendar.DECEMBER == month && ticketInfo.getDate().contains("1月") && !ticketInfo.getDate().contains("11月")) {
                 year++;
+            } else if (Calendar.JANUARY == month && ticketInfo.getDate().contains("12月")) {
+                year--;
             }
             String dateStr = year + ticketInfo.getDate() + ticketInfo.getTime();
             Date date = dateFormat.parse(dateStr);
